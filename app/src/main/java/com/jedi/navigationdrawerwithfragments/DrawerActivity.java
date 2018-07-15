@@ -15,6 +15,7 @@ import android.view.MenuItem;
 
 import com.jedi.navigationdrawerwithfragments.fragments.Calculadora;
 import com.jedi.navigationdrawerwithfragments.fragments.GalleryFragment;
+import com.jedi.navigationdrawerwithfragments.fragments.Game;
 import com.jedi.navigationdrawerwithfragments.fragments.SlideShowFragment;
 
 public class DrawerActivity extends AppCompatActivity
@@ -40,11 +41,11 @@ public class DrawerActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        /*Fragment f = new GalleryFragment();
+        Fragment f = new Calculadora();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.fragment_container,f);
-        ft.commit();*/
+        ft.commit();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
     }
@@ -90,6 +91,9 @@ public class DrawerActivity extends AppCompatActivity
         navigationView.setCheckedItem(id);
         if (id == R.id.calculadora) {
             f = new Calculadora();
+        }
+        else if (id == R.id.game) {
+            f = new Game();
         }
         if(f != null){
             FragmentManager fm = getSupportFragmentManager();

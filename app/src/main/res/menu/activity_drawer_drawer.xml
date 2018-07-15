@@ -7,9 +7,9 @@
             android:icon="@drawable/ic_menu_gallery"
             android:title="Calculadora" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/game"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:title="Card Game" />
     </group>
 
     <item android:title="Communicate">

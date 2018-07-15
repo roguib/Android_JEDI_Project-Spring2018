@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.jedi.navigationdrawerwithfragments.Puntuacione;
 import com.jedi.navigationdrawerwithfragments.R;
 
 import org.w3c.dom.Text;
@@ -23,6 +25,8 @@ public class Calculadora extends Fragment {
     Button b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, beq, bsum, bsub, bmod, bdiv, bdelete, bsqrt, bpow, bmult, bsin, bcos, btan;
     Button bcall;
     Button opdec;
+    Button neg;
+    Boolean opneg;
     Boolean equalPressed;
     Boolean opActive;
     Boolean numPressed;
@@ -46,7 +50,8 @@ public class Calculadora extends Fragment {
         equalPressed = false;
         opActive = false;
         numPressed = false;
-
+        dec = false;
+        opneg = false;
         b0 = (Button) v.findViewById(R.id.button29);
         b1 = (Button) v.findViewById(R.id.button21);
         b2 = (Button) v.findViewById(R.id.button22);
@@ -68,10 +73,11 @@ public class Calculadora extends Fragment {
         bsin = (Button) v.findViewById(R.id.button8);
         bcos = (Button) v.findViewById(R.id.button9);
         btan = (Button) v.findViewById(R.id.button10);
+        neg = (Button) v.findViewById(R.id.button6);
         bdelete = (Button) v.findViewById(R.id.button34);
         bcall = (Button) v.findViewById(R.id.button36);
         opdec = (Button) v.findViewById(R.id.button30);
-        textViewResult = (TextView) v.findViewById(R.id.textViewResult);
+        //textViewResult = (TextView) v.findViewById(R.id.textViewResult);
 
         //en vez de int es una variable click
         View.OnClickListener appendNumber = new View.OnClickListener()
@@ -98,10 +104,15 @@ public class Calculadora extends Fragment {
                     equalPressed = true;
                     dec = false;
                 }
-                else if(b == opdec && !dec)
+                else if(b == opdec)
                 {
-                    textViewResult.append(",");
+                    textViewResult.append(".");
                     dec = true;
+                }
+                else if(b == neg && !numPressed)
+                {
+                    textViewResult.append("-");
+                    opneg = true;
                 }
                 else
                 {
@@ -113,6 +124,7 @@ public class Calculadora extends Fragment {
                         opActive = false;
                         numPressed = false;
                         dec = false;
+                        opneg = false;
                     }
                     else
                     {
@@ -180,6 +192,7 @@ public class Calculadora extends Fragment {
                 }
             }
         };
+
         b0.setOnClickListener(appendNumber);
         b1.setOnClickListener(appendNumber);
         b2.setOnClickListener(appendNumber);
@@ -204,6 +217,7 @@ public class Calculadora extends Fragment {
         btan.setOnClickListener(appendNumber);
         bcall.setOnClickListener(appendNumber);
         opdec.setOnClickListener(appendNumber);
+        neg.setOnClickListener(appendNumber);
 
         return v;
     }
@@ -220,10 +234,26 @@ public class Calculadora extends Fragment {
         // etc.
     }
 
+    /*@Override
+    public void onActivityCreated(Bundle savedInstanceState)
+    {
+        if(!savedInstanceState.isEmpty())
+        {
+            super.onActivityCreated(savedInstanceState);
+            textViewResult.setText(savedInstanceState.getString("textCalc"));
+            opActive = savedInstanceState.getBoolean("opActive");
+            numPressed = savedInstanceState.getBoolean("numPressed");
+            dec = savedInstanceState.getBoolean("dec");
+        }
+    }*/
+
     String determinarOperacio(String text)
     {
-        for(int i = 0; i < text.length(); ++i)
-        {
+        int i = 0;
+        if(opneg) {
+            ++i;
+        }
+        while(i < text.length()) {
             if(text.charAt(i) == '+') return "sum";
             else if(text.charAt(i) == '-') return "sub";
             else if(text.charAt(i) == '/') return "div";
@@ -234,6 +264,7 @@ public class Calculadora extends Fragment {
             else if(text.charAt(i) == 'S' && text.charAt(i+1) == 'I') return "sin";
             else if(text.charAt(i) == 'C') return "cos";
             else if(text.charAt(i) == 'T') return "tan";
+            ++i;
         }
         return "error";
     }
@@ -259,9 +290,10 @@ public class Calculadora extends Fragment {
             res = Integer.parseInt(num1) + Integer.parseInt(num2);
             return String.valueOf(res);
         }
-        else
-        {
+        else {
             resd = Double.parseDouble(num1) + Double.parseDouble(num2);
+            Log.v("suma", "La suma en duble es: " + resd);
+            Log.v("suma en string", "La suma en string es: " + String.valueOf(resd));
             dec = false;
             return String.valueOf(resd);
         }
@@ -272,6 +304,10 @@ public class Calculadora extends Fragment {
         String num1 = "", num2 = "";
         int res, i = 0;
         double resd;
+        if(opneg) {
+            opneg = false;
+            ++i;
+        }
         while(text.charAt(i) != '-')
         {
             num1 += text.charAt(i);
@@ -387,6 +423,7 @@ public class Calculadora extends Fragment {
     {
         String num1 = "";
         int res, i = 0;
+        double resd;
         while(text.charAt(i) == 'S' || text.charAt(i) == 'Q' || text.charAt(i) == 'R' || text.charAt(i) == 'T')
         {
             ++i;
@@ -397,14 +434,24 @@ public class Calculadora extends Fragment {
             num1 += text.charAt(i);
             ++i;
         }
-        res = (int)Math.sqrt(Double.parseDouble(num1));
-        return String.valueOf(res);
+        if(!dec)
+        {
+            res = (int)Math.sqrt(Double.parseDouble(num1));
+            return String.valueOf(res);
+        }
+        else
+        {
+            resd = Math.sqrt(Double.parseDouble(num1));
+            dec = false;
+            return String.valueOf(resd);
+        }
     }
 
     String calcularMult(String text)
     {
         String num1 = "", num2 = "";
         int res, i = 0;
+        double resd;
         while(text.charAt(i) != '*')
         {
             num1 += text.charAt(i);
@@ -416,8 +463,18 @@ public class Calculadora extends Fragment {
             num2 += text.charAt(i);
             ++i;
         }
-        res = Integer.parseInt(num1) * Integer.parseInt(num2);
-        return String.valueOf(res);
+
+        if(!dec)
+        {
+            res = Integer.parseInt(num1) * Integer.parseInt(num2);
+            return String.valueOf(res);
+        }
+        else
+        {
+            resd = Double.parseDouble(num1) * Double.parseDouble(num2);
+            dec = false;
+            return String.valueOf(resd);
+        }
     }
 
     String calcularSin(String text)
