@@ -1,6 +1,8 @@
 package com.jedi.navigationdrawerwithfragments.fragments;
 
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.jedi.navigationdrawerwithfragments.LoginActivity;
 import com.jedi.navigationdrawerwithfragments.R;
 
 /**
@@ -17,6 +20,7 @@ import com.jedi.navigationdrawerwithfragments.R;
  */
 public class Game extends Fragment {
 
+    Button logOut;
     ImageButton b0, b1, b2, b3;
     ImageButton b4, b5, b6, b7;
     ImageButton b8, b9, b10, b11;
@@ -50,13 +54,23 @@ public class Game extends Fragment {
         b12 = (ImageButton) v.findViewById(R.id.imageButton13);
         b13 = (ImageButton) v.findViewById(R.id.imageButton14);
         b14 = (ImageButton) v.findViewById(R.id.imageButton15);
+        logOut = (Button) v.findViewById(R.id.logOut);
         //textViewResult = (TextView) v.findViewById(R.id.textViewResult);
 
         //en vez de int es una variable click
         View.OnClickListener appendNumber = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                b0.setImageResource(R.drawable.as);
+                Button b = (Button) view;
+                /* girar la imagen:
+                b0.setImageResource(R.drawable.as); */
+                if(b == logOut)
+                {
+                    //SharedPreferences.Editor.clear();
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
             }
         };
 
@@ -75,6 +89,7 @@ public class Game extends Fragment {
         b12.setOnClickListener(appendNumber);
         b13.setOnClickListener(appendNumber);
         b14.setOnClickListener(appendNumber);
+        logOut.setOnClickListener(appendNumber);
         return v;
     }
 

@@ -1,35 +1,47 @@
 package com.jedi.navigationdrawerwithfragments;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
-import com.jedi.navigationdrawerwithfragments.fragments.Calculadora;
-import com.jedi.navigationdrawerwithfragments.fragments.Game;
+import io.realm.Realm;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
 
 public class LoginActivity extends AppCompatActivity {
 
     TextInputEditText usuari, ps;
-    Button button, buttonReg;
+    Button buttonLogin, buttonReg;
+    public Realm realm;
+    public RealmResults<User> userResults;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        button = (Button) findViewById(R.id.button6);
+        buttonLogin = (Button) findViewById(R.id.button6);
         buttonReg = (Button) findViewById(R.id.button7);
-        final TextInputLayout usernameWrapper = (TextInputLayout) findViewById(R.id.textInputLayout);
-        final TextInputLayout passwordWrapper = (TextInputLayout) findViewById(R.id.password);
+        final TextInputLayout usernameWrapper = (TextInputLayout) findViewById(R.id.usuariWrapper);
+        final TextInputLayout passwordWrapper = (TextInputLayout) findViewById(R.id.passwordWrapper);
+
+        initRealm();
+        loadRealmData();
+
+        SharedPreferences settings = getSharedPreferences("sp", MODE_PRIVATE);
+        //To retrieve values from a shared preferences file, call methods such as getInt() and getString(), providing the key for the value you want, and optionally a default value to return if the key isn't present.
+        boolean opeenSession = settings.getBoolean("open session", false);
+        if(opeenSession)
+        {
+            Log.v("contrassenya", "està guardada la sessió");
+            Intent intent = new Intent(getApplicationContext(), DrawerActivity.class);
+            startActivity(intent);
+        }
 
         /*
             Retrieve data:
@@ -37,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
                 String password = usernameWrapper.getEditText().getText().toString();
         */
 
-        button.setOnClickListener(new View.OnClickListener() {
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -57,8 +69,35 @@ public class LoginActivity extends AppCompatActivity {
 
                 //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 //drawer.closeDrawer(GravityCompat.START);
-                Intent intent = new Intent(getApplicationContext(), DrawerActivity.class);
-                startActivity(intent);
+                String username = usernameWrapper.getEditText().getText().toString();
+                String password = usernameWrapper.getEditText().getText().toString();
+                User userResult = realm.where(User.class).equalTo("usuari", username).findFirst();
+                if (existeix(username)) {
+                    if(userResult.getContrasenya().toString().equals(password)) {
+                        //name of the shared preferences db
+                        SharedPreferences settings = getSharedPreferences("sp", 0);
+                        SharedPreferences.Editor editor = settings.edit();
+                        editor.putString("usuari", username);
+                        editor.putString("contrasenya", password);
+                        editor.putBoolean("open session", true);
+                        editor.apply();
+                        Intent intent = new Intent(getApplicationContext(), DrawerActivity.class);
+                        startActivity(intent);
+                    }
+                    /*else {
+                        fail.setText("login failed!");
+                        editText1.setText("");
+                        editText2.setText("");
+                    }*/
+                }
+                /*else {
+                    fail.setText("login failed!");
+                    editText1.setText("");
+                    editText2.setText("");
+                    editText2.setText("");
+                }*/
+                /*Intent intent = new Intent(getApplicationContext(), DrawerActivity.class);
+                startActivity(intent);*/
                 //No podem passar d'una activity a un fragment. Hem de passar d'una activity al drawer activity
                 //i d'alla en el on create cridar al fragment de la calculadora.
                 //El fragment és com un button, no el podem instanciar si no el posem a sobre de l'activity
@@ -68,9 +107,23 @@ public class LoginActivity extends AppCompatActivity {
         buttonReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
-                startActivity(intent);*/
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivity(intent);
             }
         });
+    }
+    private boolean existeix(String n) {
+        userResults = realm.where(User.class).equalTo("usuari", n).findAll();
+        if(userResults.size() < 1) return false;
+        else return true;
+    }
+
+    private void initRealm() {
+        Realm.init(getApplicationContext());
+        realm = Realm.getDefaultInstance();
+    }
+
+    private void loadRealmData() {
+        userResults = realm.where(User.class).findAll();
     }
 }

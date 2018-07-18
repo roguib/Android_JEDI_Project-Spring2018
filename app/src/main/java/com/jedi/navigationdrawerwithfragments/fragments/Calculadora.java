@@ -1,17 +1,24 @@
 package com.jedi.navigationdrawerwithfragments.fragments;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
+import com.jedi.navigationdrawerwithfragments.LoginActivity;
 import com.jedi.navigationdrawerwithfragments.Puntuacione;
 import com.jedi.navigationdrawerwithfragments.R;
 
@@ -26,6 +33,7 @@ public class Calculadora extends Fragment {
     Button bcall;
     Button opdec;
     Button neg;
+    Button logOut;
     Boolean opneg;
     Boolean equalPressed;
     Boolean opActive;
@@ -77,6 +85,7 @@ public class Calculadora extends Fragment {
         bdelete = (Button) v.findViewById(R.id.button34);
         bcall = (Button) v.findViewById(R.id.button36);
         opdec = (Button) v.findViewById(R.id.button30);
+        logOut = (Button) v.findViewById(R.id.logOut);
         //textViewResult = (TextView) v.findViewById(R.id.textViewResult);
 
         //en vez de int es una variable click
@@ -85,7 +94,18 @@ public class Calculadora extends Fragment {
             @Override
             public void onClick(View view) {
                 Button b = (Button) view;
-                if(b == beq)
+                if(b == logOut)
+                {
+                    SharedPreferences prefs = getActivity().getSharedPreferences("sp", 0);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean("open session", false);
+                    editor.commit();
+                    Log.v("debug message", "hola");
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+                else if(b == beq)
                 {
                     String op = determinarOperacio(textViewResult.getText().toString());
                     String res = "";
@@ -218,6 +238,7 @@ public class Calculadora extends Fragment {
         bcall.setOnClickListener(appendNumber);
         opdec.setOnClickListener(appendNumber);
         neg.setOnClickListener(appendNumber);
+        logOut.setOnClickListener(appendNumber);
 
         return v;
     }
@@ -225,7 +246,7 @@ public class Calculadora extends Fragment {
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         // Save UI state changes to the savedInstanceState.
-        // This bundle will be passed to onCreate if the process is
+        // This bundle will be passed to 0eate if the process is
         // killed and restarted.
         savedInstanceState.putBoolean("opActive", opActive);
         savedInstanceState.putBoolean("numPressed", numPressed);
