@@ -2,6 +2,7 @@ package com.jedi.navigationdrawerwithfragments;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import io.realm.Realm;
 import io.realm.RealmQuery;
@@ -70,11 +72,14 @@ public class LoginActivity extends AppCompatActivity {
                 //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 //drawer.closeDrawer(GravityCompat.START);
                 String username = usernameWrapper.getEditText().getText().toString();
-                String password = usernameWrapper.getEditText().getText().toString();
+                String password = passwordWrapper.getEditText().getText().toString();
                 User userResult = realm.where(User.class).equalTo("usuari", username).findFirst();
                 if (existeix(username)) {
                     if(userResult.getContrasenya().toString().equals(password)) {
                         //name of the shared preferences db
+                        Log.v("no hauria d'estar aquí", "noob");
+                        Log.v("La contrasenya guardada era: ", userResult.getContrasenya().toString());
+                        Log.v("La contrasenya introduida era: ", password);
                         SharedPreferences settings = getSharedPreferences("sp", 0);
                         SharedPreferences.Editor editor = settings.edit();
                         editor.putString("usuari", username);
@@ -84,18 +89,23 @@ public class LoginActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), DrawerActivity.class);
                         startActivity(intent);
                     }
-                    /*else {
-                        fail.setText("login failed!");
-                        editText1.setText("");
-                        editText2.setText("");
-                    }*/
+                    else {
+                        Toast toast = Toast.makeText(getApplicationContext(), "Contrassenya incorrecta", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
                 }
-                /*else {
-                    fail.setText("login failed!");
-                    editText1.setText("");
-                    editText2.setText("");
-                    editText2.setText("");
-                }*/
+                else {
+                    //Snackbar.make(v, "Usuari no registrat", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(v, "Usuari no registrat", Snackbar.LENGTH_LONG).setAction("Registrarse", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            //Log.i("Snackbar", "Pulsada acción snackbar!");
+                            Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                            startActivity(intent);
+
+                        }
+                    }).show();
+                }
                 /*Intent intent = new Intent(getApplicationContext(), DrawerActivity.class);
                 startActivity(intent);*/
                 //No podem passar d'una activity a un fragment. Hem de passar d'una activity al drawer activity
