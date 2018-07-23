@@ -10,6 +10,11 @@
             android:id="@+id/game"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Card Game" />
+
+        <item
+            android:id="@+id/player"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Music Player" />
     </group>
 
     <item android:title="Communicate">

@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import com.jedi.navigationdrawerwithfragments.fragments.Calculadora;
 import com.jedi.navigationdrawerwithfragments.fragments.GalleryFragment;
 import com.jedi.navigationdrawerwithfragments.fragments.Game;
+import com.jedi.navigationdrawerwithfragments.fragments.Player;
 import com.jedi.navigationdrawerwithfragments.fragments.SlideShowFragment;
 
 public class DrawerActivity extends AppCompatActivity
@@ -94,6 +95,10 @@ public class DrawerActivity extends AppCompatActivity
         }
         else if (id == R.id.game) {
             f = new Game();
+        }
+        else if (id == R.id.player)
+        {
+            f = new Player();
         }
         if(f != null){
             FragmentManager fm = getSupportFragmentManager();
