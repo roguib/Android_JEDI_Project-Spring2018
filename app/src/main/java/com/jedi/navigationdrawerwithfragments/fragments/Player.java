@@ -17,8 +17,6 @@ public class Player extends Fragment {
     MediaPlayer mp;
     Boolean playing;
     int index = 0;
-
-    //en vez de this, como estamos en un fragment para obtener el contexto de la app debemos usar el getActivity seguido del guet application context
     final int playlist[] = {R.raw.a, R.raw.b, R.raw.c, R.raw.d};
 
     public Player() {
@@ -30,37 +28,36 @@ public class Player extends Fragment {
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_player, container, false);
-        Log.v("debug", "onCreateView");
+        //Log.v("debug", "onCreateView");
         player = (Button) v.findViewById(R.id.play);
         previous = (Button) v.findViewById(R.id.previous);
         next = (Button) v.findViewById(R.id.next);
+        //en vez de this, como estamos en un fragment para obtener el contexto de la app debemos
+        //usar el getActivity seguido del get application context
         mp = MediaPlayer.create(getActivity().getApplicationContext(), playlist[index]);
         playing = false;
-        Log.v("debug", "playing false");
+        //Log.v("debug", "playing false");
         View.OnClickListener appendNumber = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.v("debug", "onClick");
+                //Log.v("debug", "onClick");
                 Button b = (Button) view;
-                if(b == player)
-                {
+                if(b == player) {
                     if(!playing) {
                         mp.start();
                         playing = true;
-                        Log.v("debug", "player --> !playing --> playing = true");
+                        //Log.v("debug", "player --> !playing --> playing = true");
                         player.setBackgroundResource(R.drawable.baseline_pause_circle_outline_black_36dp);
                     }
                     else {
                         mp.pause();
                         playing = false;
-                        Log.v("debug", "player --> playing --> playing = false");
+                        //Log.v("debug", "player --> playing --> playing = false");
                         player.setBackgroundResource(R.drawable.baseline_play_arrow_black_36dp);
                     }
                 }
-                else if(b == previous)
-                {
-                    if(index > 0)
-                    {
+                else if(b == previous) {
+                    if(index > 0) {
                         --index;
                         mp.pause();
                         mp.release();
@@ -75,10 +72,8 @@ public class Player extends Fragment {
                         mp.start();
                     }
                 }
-                else if(b == next)
-                {
-                    if(index < 3)
-                    {
+                else if(b == next) {
+                    if(index < 3) {
                         ++index;
                         mp.pause();
                         mp.release();
@@ -93,27 +88,11 @@ public class Player extends Fragment {
                         mp.start();
                     }
                 }
-
-                /*mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-                        Log.v("debug", "on completion");
-                        if(index < 3) {
-                            ++index;
-                        }
-                        else index = 0;
-                        mp = MediaPlayer.create(getActivity().getApplicationContext(), playlist[index]);
-                        mp.start();
-                    }
-                });*/
             }
         };
-
         player.setOnClickListener(appendNumber);
         previous.setOnClickListener(appendNumber);
         next.setOnClickListener(appendNumber);
         return v;
     }
-
 }

@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.jedi.navigationdrawerwithfragments.Puntuacion;
 import com.jedi.navigationdrawerwithfragments.R;
-import com.jedi.navigationdrawerwithfragments.User;
 
 import io.realm.Realm;
 import io.realm.RealmResults;

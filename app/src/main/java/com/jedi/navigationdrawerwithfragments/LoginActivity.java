@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import io.realm.Realm;
-import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
 public class LoginActivity extends AppCompatActivity {
@@ -36,50 +35,30 @@ public class LoginActivity extends AppCompatActivity {
         loadRealmData();
 
         SharedPreferences settings = getSharedPreferences("sp", MODE_PRIVATE);
-        //To retrieve values from a shared preferences file, call methods such as getInt() and getString(), providing the key for the value you want, and optionally a default value to return if the key isn't present.
+        //To retrieve values from a shared preferences file, call methods such as getInt() and getString(),
+        //providing the key for the value you want, and optionally a default value to return if the key isn't present.
         boolean opeenSession = settings.getBoolean("open session", false);
-        if(opeenSession)
-        {
+        if(opeenSession) {
             Log.v("contrassenya", "està guardada la sessió");
             Intent intent = new Intent(getApplicationContext(), DrawerActivity.class);
             startActivity(intent);
         }
-
-        /*
-            Retrieve data:
+        /* Retrieve data:
                 String username = usernameWrapper.getEditText().getText().toString();
                 String password = usernameWrapper.getEditText().getText().toString();
         */
-
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                /*User u = new User();
-                boolean res = u.login(editTextUser.getText().toString(), editTextPassword.getText().toString());
-                if(res)
-                {
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
-                }*/
-                /*Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);*/
-                //else añadir notificacion toast
-                //No se pueden usar intents de activity a fragment
-                /*Intent intent = new Intent(getApplicationContext(), Calculadora.class);
-                startActivity(intent);*/
-
-                //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                //drawer.closeDrawer(GravityCompat.START);
                 String username = usernameWrapper.getEditText().getText().toString();
                 String password = passwordWrapper.getEditText().getText().toString();
                 User userResult = realm.where(User.class).equalTo("usuari", username).findFirst();
                 if (existeix(username)) {
                     if(userResult.getContrasenya().toString().equals(password)) {
                         //name of the shared preferences db
-                        Log.v("no hauria d'estar aquí", "noob");
-                        Log.v("La contrasenya guardada era: ", userResult.getContrasenya().toString());
-                        Log.v("La contrasenya introduida era: ", password);
+                        //Log.v("no hauria d'estar aquí", "noob");
+                        //Log.v("La contrasenya guardada era: ", userResult.getContrasenya().toString());
+                        //Log.v("La contrasenya introduida era: ", password);
                         SharedPreferences settings = getSharedPreferences("sp", 0);
                         SharedPreferences.Editor editor = settings.edit();
                         editor.putString("usuari", username);
@@ -95,7 +74,6 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
                 else {
-                    //Snackbar.make(v, "Usuari no registrat", Snackbar.LENGTH_LONG).show();
                     Snackbar.make(v, "Usuari no registrat", Snackbar.LENGTH_LONG).setAction("Registrarse", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -106,11 +84,6 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }).show();
                 }
-                /*Intent intent = new Intent(getApplicationContext(), DrawerActivity.class);
-                startActivity(intent);*/
-                //No podem passar d'una activity a un fragment. Hem de passar d'una activity al drawer activity
-                //i d'alla en el on create cridar al fragment de la calculadora.
-                //El fragment és com un button, no el podem instanciar si no el posem a sobre de l'activity
             }
         });
 

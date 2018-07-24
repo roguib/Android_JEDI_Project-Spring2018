@@ -59,7 +59,6 @@ public class Game extends Fragment {
         // Inflate the layout for this fragment
         super.onCreate(savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_game, container, false);
-        //textViewResult = (TextView) v.findViewById(R.id.textViewResult);
         c = (Chronometer) v.findViewById(R.id.chrono);
         b0 = (ImageButton) v.findViewById(R.id.imageButton1);
         b1 = (ImageButton) v.findViewById(R.id.imageButton2);
@@ -82,7 +81,6 @@ public class Game extends Fragment {
         stardOfTheGame = false;
         finalTime = "";
         found = 0;
-        //textViewResult = (TextView) v.findViewById(R.id.textViewResult);
         shuffleArray(cards);
         initRealm();
         View.OnClickListener appendNumber2 = new View.OnClickListener() {
@@ -106,8 +104,6 @@ public class Game extends Fragment {
             @Override
             public void onClick(View view) {
                 ImageButton ib = (ImageButton) view;
-                /* girar la imagen:
-                b0.setImageResource(R.drawable.as); */
                 if(ib == b0) {
                     changeImageButton(ib, 0);
                 }
@@ -156,8 +152,6 @@ public class Game extends Fragment {
                 else if(ib == b15) {
                     changeImageButton(ib, 15);
                 }
-
-
                 if(!stardOfTheGame) {
                     stardOfTheGame = true;
                     c.start();
@@ -165,17 +159,16 @@ public class Game extends Fragment {
                 if(found == 8) {
                     c.stop();
                     finalTime = c.getText().toString();
-                    Log.v("time", finalTime);
+                    //Log.v("time", finalTime);
                     SharedPreferences prefs = getActivity().getSharedPreferences("sp", 0);
                     Puntuacion p = new Puntuacion(prefs.getString("usuari", "wrrong"), finalTime);
-                    Log.v("p", "new p");
+                    //Log.v("p", "new p");
                     savePuntuacionToRealm(p);
-                    Log.v("realm", "saved to realm");
+                    //Log.v("realm", "saved to realm");
 
                 }
             }
         };
-
         b0.setOnClickListener(appendNumber);
         b1.setOnClickListener(appendNumber);
         b2.setOnClickListener(appendNumber);
@@ -213,20 +206,17 @@ public class Game extends Fragment {
     }
 
     private void changeImageButton(final ImageButton ib, int id) {
-        if(!firstCardPressed)
-        {
+        if(!firstCardPressed) {
             firstCardPressed = true;
             firstImgButton = ib;
             ib.setImageResource(cards[id]);
             firstCardId = cards[id];
         }
-        else if(firstCardPressed && firstImgButton != ib)
-        {
+        else if(firstCardPressed && firstImgButton != ib) {
             firstCardPressed = false;
             ib.setImageResource(cards[id]);
             if(firstCardId == cards[id]) ++found;
-            else
-            {
+            else {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -247,6 +237,6 @@ public class Game extends Fragment {
         realm.beginTransaction();
         final Puntuacion aux = realm.copyToRealm(p);
         realm.commitTransaction();
-        Log.v("realm", "commitTransaction");
+        //Log.v("realm", "commitTransaction");
     }
 }
