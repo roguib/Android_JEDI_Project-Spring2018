@@ -1,20 +1,31 @@
 package com.jedi.navigationdrawerwithfragments;
+import io.realm.RealmObject;
 
-import java.util.List;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+public class Puntuacion extends RealmObject {
+    private String user;
+    private String t;
 
-public class Puntuacion {
-
-    @SerializedName("puntuaciones")
-    @Expose
-    private List<Puntuacione> puntuaciones = null;
-
-    public List<Puntuacione> getPuntuaciones() {
-        return puntuaciones;
+    public Puntuacion() {
     }
 
-    public void setPuntuaciones(List<Puntuacione> puntuaciones) {
-        this.puntuaciones = puntuaciones;
+    public Puntuacion(String user, String t) {
+        this.user = user;
+        this.t = t;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getT() {
+        return t;
+    }
+
+    public void setT(String t) {
+        this.t = t;
     }
 }

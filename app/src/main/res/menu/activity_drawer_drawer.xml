@@ -15,19 +15,10 @@
             android:id="@+id/player"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Music Player" />
+
+        <item
+            android:id="@+id/ranking"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Memory Card Ranking" />
     </group>
-
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
-        </menu>
-    </item>
-
 </menu>

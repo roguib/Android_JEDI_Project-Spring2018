@@ -17,10 +17,14 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.jedi.navigationdrawerwithfragments.LoginActivity;
+import com.jedi.navigationdrawerwithfragments.Puntuacion;
 import com.jedi.navigationdrawerwithfragments.R;
+import com.jedi.navigationdrawerwithfragments.User;
 
 import java.util.Random;
 
+import io.realm.Realm;
+import android.content.SharedPreferences;
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -42,6 +46,7 @@ public class Game extends Fragment {
     int firstCardId;
     int found;
     String finalTime;
+    Realm realm;
 
     public Game() {
         // Required empty public constructor
@@ -79,8 +84,7 @@ public class Game extends Fragment {
         found = 0;
         //textViewResult = (TextView) v.findViewById(R.id.textViewResult);
         shuffleArray(cards);
-        //en vez de int es una variable click
-
+        initRealm();
         View.OnClickListener appendNumber2 = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -162,6 +166,12 @@ public class Game extends Fragment {
                     c.stop();
                     finalTime = c.getText().toString();
                     Log.v("time", finalTime);
+                    SharedPreferences prefs = getActivity().getSharedPreferences("sp", 0);
+                    Puntuacion p = new Puntuacion(prefs.getString("usuari", "wrrong"), finalTime);
+                    Log.v("p", "new p");
+                    savePuntuacionToRealm(p);
+                    Log.v("realm", "saved to realm");
+
                 }
             }
         };
@@ -226,5 +236,17 @@ public class Game extends Fragment {
                 }, 1000);
             }
         }
+    }
+
+    private void initRealm() {
+        Realm.init(getActivity().getApplicationContext());
+        realm = Realm.getDefaultInstance();
+    }
+
+    private void savePuntuacionToRealm(Puntuacion p) {
+        realm.beginTransaction();
+        final Puntuacion aux = realm.copyToRealm(p);
+        realm.commitTransaction();
+        Log.v("realm", "commitTransaction");
     }
 }

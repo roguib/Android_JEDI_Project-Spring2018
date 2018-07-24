@@ -1,6 +1,5 @@
 package com.jedi.navigationdrawerwithfragments;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,15 +10,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.jedi.navigationdrawerwithfragments.fragments.Calculadora;
-import com.jedi.navigationdrawerwithfragments.fragments.GalleryFragment;
 import com.jedi.navigationdrawerwithfragments.fragments.Game;
 import com.jedi.navigationdrawerwithfragments.fragments.Player;
-import com.jedi.navigationdrawerwithfragments.fragments.SlideShowFragment;
+import com.jedi.navigationdrawerwithfragments.fragments.Ranking;
 
 public class DrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -99,6 +96,9 @@ public class DrawerActivity extends AppCompatActivity
         else if (id == R.id.player)
         {
             f = new Player();
+        }
+        else if(id == R.id.ranking) {
+            f = new Ranking();
         }
         if(f != null){
             FragmentManager fm = getSupportFragmentManager();
