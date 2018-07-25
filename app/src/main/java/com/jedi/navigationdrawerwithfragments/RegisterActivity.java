@@ -1,5 +1,6 @@
 package com.jedi.navigationdrawerwithfragments;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -38,6 +39,8 @@ public class RegisterActivity extends AppCompatActivity {
                 saveUserToRealm(u);
                 NotificationHelper n = new NotificationHelper(getApplicationContext());
                 n.createNotification("", "Ususari registrat correctament");
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
             }
         });
     }

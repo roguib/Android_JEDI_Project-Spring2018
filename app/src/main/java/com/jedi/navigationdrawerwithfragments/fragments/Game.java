@@ -223,7 +223,7 @@ public class Game extends Fragment {
                         ib.setImageResource(R.drawable.card_back);
                         firstImgButton.setImageResource(R.drawable.card_back);
                     }
-                }, 1000);
+                }, 500);
             }
         }
     }

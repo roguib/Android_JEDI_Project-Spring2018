@@ -140,4 +140,12 @@ public class Player extends Fragment {
         s4.setOnClickListener(appendNumber);
         return v;
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mp != null) {
+            mp.release();
+        }
+    }
 }
