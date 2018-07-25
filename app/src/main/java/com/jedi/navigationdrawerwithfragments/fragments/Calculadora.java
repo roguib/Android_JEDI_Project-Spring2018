@@ -29,6 +29,7 @@ public class Calculadora extends Fragment {
     Boolean opActive;
     Boolean numPressed;
     Boolean dec;
+    Boolean div;
     TextView textViewResult;
 
     public Calculadora() {
@@ -49,6 +50,7 @@ public class Calculadora extends Fragment {
         numPressed = false;
         dec = false;
         opneg = false;
+        div = false;
         b0 = (Button) v.findViewById(R.id.button29);
         b1 = (Button) v.findViewById(R.id.button21);
         b2 = (Button) v.findViewById(R.id.button22);
@@ -122,6 +124,7 @@ public class Calculadora extends Fragment {
                         String aux = "";
                         textViewResult.setText(aux);
                         equalPressed = false;
+                        div = false;
                         opActive = false;
                         numPressed = false;
                         dec = false;
@@ -135,6 +138,7 @@ public class Calculadora extends Fragment {
                         else if (b == bdiv && !opActive && numPressed) {
                             textViewResult.append("/");
                             opActive = true;
+                            div = true;
                         }
                         else if (b == bmod && !opActive && numPressed) {
                             textViewResult.append("%");
@@ -171,10 +175,11 @@ public class Calculadora extends Fragment {
                                 textViewResult.setText(b.getText().toString());
                                 equalPressed = false;
                             }
-                            else if(b == b0 || b == b0 || b == b1 || b == b2 || b == b3 || b == b4 ||
+                            else if(b == b0 || b == b1 || b == b2 || b == b3 || b == b4 ||
                                     b == b5 || b == b6 || b == b7 || b == b8 || b == b9) {
                                 numPressed = true;
-                                textViewResult.append(b.getText().toString());
+                                if(div && b != b0) textViewResult.append(b.getText().toString());
+                                else if(!div) textViewResult.append(b.getText().toString());
                             }
                         }
                     }

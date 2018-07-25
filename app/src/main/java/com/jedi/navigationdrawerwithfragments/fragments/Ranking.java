@@ -58,7 +58,7 @@ public class Ranking extends Fragment {
         int i = 0;
         String text = "";
         while (i < 5 && i < p.size()) {
-            text = p.get(i).getUser().toString() + " " + p.get(i).getT().toString() + '\n';
+            text = Integer.toString(i+1) + ". " + p.get(i).getUser().toString() + " " + p.get(i).getT().toString() + '\n';
             ranking.append(text);
             ++i;
         }
