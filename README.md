@@ -14,12 +14,12 @@ La calculadora realiza las siguientes operaciones:
 escrito previamente en la pantalla.
 
 Limitaciones: 
-*No permite hacer operaciones encadenadas.
+* No permite hacer operaciones encadenadas.
 
 La aplicación dispone de:
-*Toast: Contraseña incorrecta.
-*SnackBar: Cuando se intenta loguear sin estar registrado.
-*Notificaciones locales: Cuando se registra correctamente un nuevo usuario.
+* Toast: Contraseña incorrecta.
+* SnackBar: Cuando se intenta loguear sin estar registrado.
+* Notificaciones locales: Cuando se registra correctamente un nuevo usuario.
 
 Shared Preferences:
 
