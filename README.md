@@ -10,6 +10,19 @@ The app has the following elements:
 
 Also, for the sake of learning, we added things such as toasts, snakbars and local notifications.
 
+## Requeriments and execution
+- Android 27 or lower
+- Android studio to compile and execute the app on an emulator
+
+1. Clone this repository on your machine:
+```
+git clone https://github.com/roguib/Android_JEDI_Project-Spring2018.git
+```
+2. Open the project's folder with Android Studio and follow the instructions detailed in the [Android Documentation](https://developer.android.com/studio/run/ "Android Documentation") on how to run and execute an app.
+
+## Screenshots
+Coming soon.
+
 ## What I have learned
 A lot of things, to mention some of them:
 - Basic elements of an Android App such as main activites, fragments, intents, shared preferences and other stuff
