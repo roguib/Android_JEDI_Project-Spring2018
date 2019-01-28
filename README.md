@@ -1,26 +1,17 @@
 # JEDI_Project
-La calculadora realiza las siguientes operaciones:
-* Suma
-* Resta
-* Multiplicación
-* División
-* Módulo
-* Sinus
-* Cosinus
-* Tangente
-* Raiz cuadrada
-* Número elevado a otro
-*La calculadora también permite cambiar el signo de un número y hacer operaciones decimales, a parte de llamar a un número
-escrito previamente en la pantalla.
+This was my first project working with Android. As one of my friends named is a "swiss knife" project, just because it contains different elements with varely any relation.
 
-Limitaciones: 
-* No permite hacer operaciones encadenadas.
+## Content
+The app has the following elements:
+- Log in/Sign in
+- Calculator
+- Memory card game with a ranking storing the time needed for different users in order to solve the puzzle
+- Local music player
+Also, for the sake of learning, we added things such as toasts, snakbars and local notifications.
 
-La aplicación dispone de:
-* Toast: Contraseña incorrecta.
-* SnackBar: Cuando se intenta loguear sin estar registrado.
-* Notificaciones locales: Cuando se registra correctamente un nuevo usuario.
-
-Shared Preferences:
-
-Se usa, básicamente, para la persistencia de usuario una vez se cierra la aplicación.
+## What I have learned
+A lot of things, to mention some of them:
+- Basic elements of an Android App such as main activites, fragments, intents, shared preferences and other stuff
+- Android studio enviroment and basic UI/UX design
+- How to think, structure, programm, debug and improve the code
+- How to publish an app to the Play Store
