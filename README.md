@@ -7,6 +7,7 @@ The app has the following elements:
 - Calculator
 - Memory card game with a ranking storing the time needed for different users in order to solve the puzzle
 - Local music player
+
 Also, for the sake of learning, we added things such as toasts, snakbars and local notifications.
 
 ## What I have learned
