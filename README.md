@@ -1,4 +1,4 @@
-# JEDI_Project
+# Android JEDI Project
 This was my first project working with Android. As one of my friends named is a "swiss knife" project, just because it contains different elements with varely any relation.
 
 ## Content
