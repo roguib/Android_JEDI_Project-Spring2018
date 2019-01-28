@@ -15,3 +15,7 @@ A lot of things, to mention some of them:
 - Android studio enviroment and basic UI/UX design
 - How to think, structure, programm, debug and improve the code
 - How to publish an app to the Play Store
+
+## License and some considerations:
+Feel free to read, use or modify all or part of my work without giving me any credit at all. This activity was the final project for an extracurricular course I took during my summer holidays at my university.
+If you are interested in learning Android or want to learn more visit, the following [link](http://android.jediupc.com/ "Jedi UPC")
